@@ -29,7 +29,7 @@ A subsequent conversion changed supported Store group identities, their parsed r
 | After owner exited the game | All 282 content keys and seven object definitions remained present |
 | Existing Store content | Monitored original `.ebc` and entitlement hashes unchanged |
 
-The public converter preserves original thumbnail identities to avoid collisions found in other sets. Its three tested outputs differ from these native-tested prototypes only in the root thumbnail identity and corresponding manifest reference; the public archive hashes and exact verification scope are recorded separately in the collection results.
+The public converter now matches all indexed resource identities and non-manifest payloads of the native-tested Iams, Pets-gift and Seasons variants. Its only payload difference corrects each root manifest’s thumbnail text to match the mapped index key. Colliding thumbnail variants are rejected rather than merged. Exact public archive bytes have not been independently installed; hashes and verification scope are recorded in the collection results.
 
 The pet house is under **Buy Mode → Sort by Function → Pets → All**. Converted objects appear as custom content; Store-only filters may hide them.
 
@@ -40,3 +40,9 @@ A temporary No Intro package confirmed that the selected profile reads its Mods 
 The seven archives contain **92 packages and 12,137 resources**; identifiers and header-recovery digests are in [collection results](collection-results.json). After metadata conversion, **Atomic Age Pets Registration Gifts** and **Seasons Wall Decal Pack** also installed successfully. Their expected content keys and object definitions were present in the resulting cache alongside Iams. Their catalog visibility has not yet been confirmed in game.
 
 The Iams pet-house observation establishes catalog visibility, not every item's interactions. No runtime trace established the exact original rejection branch. Protected headers do not by themselves prove accidental corruption, and this case does not establish that a newer game patch is needed. Worlds, lots, CAS items, premium objects and legacy vehicle rigs require additional format and runtime checks; header recovery of those archives is not a claim of complete repair.
+
+## Additional private installation results
+
+Renault and Plants vs. Zombies reached the content cache after conversion; interactions remain unverified. The latter uses a set container and premium buff routing that require separate accounting from playable objects.
+
+The complete Riverview and pet-store archives also reported Success, but their world/venue files and some sidecar resources were absent afterward. Originals were restored immediately. A pet-store thumbnail reference mismatch was corrected in the producing manifest parser; Riverview’s supplied-reference graph was consistent. The complete corrected world, lot and 38 object/CAS packages were then placed in InstalledWorlds, Library and Mods, with all destination hashes verified. Their in-game visibility and interactions still require owner confirmation. Public conversion support for these four sets remains withheld; no universal repair or gameplay claim follows from their archive checks.

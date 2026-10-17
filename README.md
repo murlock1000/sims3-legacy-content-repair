@@ -38,7 +38,7 @@ $sims = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Electronic Arts
 py -3 sims3pack_repair.py convert "$sims\Downloads\IAMs2011EP5Reg.Sims3Pack" --out ".\fixed"
 ```
 
-Replace the filename for another supported set. `$sims` uses Windows' Documents location, including OneDrive redirection. For another game profile, set its actual path, for example `$sims = 'D:\Documents\Electronic Arts\The Sims 3'`.
+Replace the filename for another supported set, or use a folder to process supported originals together. `$sims` uses Windows' Documents location, including OneDrive redirection. For another game profile, set its actual path, for example `$sims = 'D:\Documents\Electronic Arts\The Sims 3'`.
 
 4. Open `%USERPROFILE%\Sims3PackRepair\fixed` in File Explorer. Double-click `IAMs2011EP5Reg.converted.Sims3Pack`, install it, and click **OK** when finished. Keep the original archive outside the game's Downloads folder to avoid duplicate launcher entries.
 5. Check a test save. Find the **Iams Pet House** under **Buy Mode → Sort by Function → Pets → All**. Use **All Content**; Store-only filters may hide converted items.

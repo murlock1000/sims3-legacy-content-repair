@@ -23,8 +23,8 @@
         "in_game_catalog": "Unverified"
       },
       "public_conversion": {
-        "output_sha256": "7cd0940beb139c2fd7f11f07a19b31dfbe3bf1ce69c01374038688cd6ba8e9d2",
-        "scope": "Archive, indexes and parsed references validated on original input. Native tests used preceding prototype differing only in root thumbnail identity/manifest reference; public output preserves original thumbnail identity.",
+        "output_sha256": "1b7981d942365d10582051cfb844c233f7841dd0e91125d8bf209657bee79150",
+        "scope": "All indexed resource keys and nonmanifest payloads exactly match native-tested prototypes. Only the root manifest thumbnail text is corrected to match its mapped resource identity. Exact archive bytes not independently native-installed.",
         "gameplay": "See separately labeled observations; no independent native test of these exact archive bytes."
       }
     },
@@ -40,7 +40,13 @@
       "resource_ids_and_package_bodies_preserved": true,
       "gameplay_test": "No per-set catalog or interaction verification.",
       "header_recovery_sha256": "f3fe7d81c89eb712d82aae512fd71180978eed440321dda762cb429f60b0354f",
-      "header_recovery_launcher_test": "Not performed"
+      "header_recovery_launcher_test": "Not performed",
+      "metadata_conversion_test": {
+        "scope": "Private experiment; public converter unsupported",
+        "installer": "Success captured; OK accepted",
+        "runtime_cache_audit": "25 playable packages accounted for; 41 set-container keys remain in original protected cache; Peashooter buff definitions present in unchanged ccmerged; 3 XML rewrites semantically equal",
+        "catalog_and_interactions": "Unverified"
+      }
     },
     {
       "input_name": "EP8RegSET.Sims3Pack",
@@ -63,8 +69,8 @@
         "in_game_catalog": "Unverified"
       },
       "public_conversion": {
-        "output_sha256": "51cce3a40a8d3b2819031c395f6853a90cd45e9adfce5cdec65588cda72ce68a",
-        "scope": "Archive, indexes and parsed references validated on original input. Native tests used preceding prototype differing only in root thumbnail identity/manifest reference; public output preserves original thumbnail identity.",
+        "output_sha256": "6d5c8896f3fd51bf6400f956c167a6ccafac89e420e48691b607e1ee15c731db",
+        "scope": "All indexed resource keys and nonmanifest payloads exactly match native-tested prototypes. Only the root manifest thumbnail text is corrected to match its mapped resource identity. Exact archive bytes not independently native-installed.",
         "gameplay": "See separately labeled observations; no independent native test of these exact archive bytes."
       }
     },
@@ -91,8 +97,8 @@
         "interactions": "Unverified"
       },
       "public_conversion": {
-        "output_sha256": "3477e5b64c1b9523e48e9ce40748e213286ef1b38281d71697f9ee6759f1e3a8",
-        "scope": "Archive, indexes and parsed references validated on original input. Native tests used preceding prototype differing only in root thumbnail identity/manifest reference; public output preserves original thumbnail identity.",
+        "output_sha256": "34de150b499e5ada1ca02c8ec8d00cc73e9b224085d65f42193dd6494a009e47",
+        "scope": "All indexed resource keys and nonmanifest payloads exactly match native-tested prototypes. Only the root manifest thumbnail text is corrected to match its mapped resource identity. Exact archive bytes not independently native-installed.",
         "gameplay": "See separately labeled observations; no independent native test of these exact archive bytes."
       }
     },
@@ -108,7 +114,21 @@
       "resource_ids_and_package_bodies_preserved": true,
       "gameplay_test": "No per-set catalog or interaction verification.",
       "header_recovery_sha256": "9fd6060cee6145268a2d98c473023df98c01e506ff745d7fc058b0309a155f2c",
-      "header_recovery_launcher_test": "Not performed"
+      "header_recovery_launcher_test": "Not performed",
+      "metadata_conversion_test": {
+        "scope": "Private experiment; public converter unsupported",
+        "installer": "Success captured; OK accepted",
+        "observed_limitation": "LOT not created; existing venue disappeared and was immediately restored from backup. 26 object-sidecar keys missing. One root manifest thumbnail mismatch found and corrected at the producing owner.",
+        "next_route": "Corrected standalone world/lot/object package deployment; in-game verification pending."
+      },
+      "direct_file_deployment": {
+        "scope": "Private staged conversion; public CLI still unsupported",
+        "files": "Riverview: 1 WORLD + 26 object/CAS packages; PetStore: 1 LOT + 12 object packages",
+        "validation": "40 outputs deployed and destination SHA256s verified; all source expanded resource keys/hashes match audited converted variants; 5110 manifest fields checked with no introduced missing supplied targets",
+        "routes": "InstalledWorlds; Library; Mods/Packages/StoreRecovered",
+        "gameplay": "Unverified; awaiting one combined new-test-game check",
+        "native_archives": "Removed from active Downloads after verified copies were retained to avoid repeating incomplete launcher installation"
+      }
     },
     {
       "input_name": "RenaultSet2.Sims3Pack",
@@ -146,7 +166,22 @@
       "resource_ids_and_package_bodies_preserved": true,
       "gameplay_test": "No per-set catalog or interaction verification.",
       "header_recovery_sha256": "a2f8a23286f212ae7e85bad66c39df7980d38b7f2d93536f016b430ad46497a2",
-      "header_recovery_launcher_test": "Not performed"
+      "header_recovery_launcher_test": "Not performed",
+      "metadata_conversion_test": {
+        "scope": "Private experiment; public converter unsupported",
+        "installer": "Success captured; OK accepted",
+        "observed_limitation": "World not recreated; original restored from backup. 973 distinct object/CAS sidecar keys absent from DBC. Exact-reference audit found no introduced missing targets.",
+        "external_mesh_dependencies": "8 original GEOM keys positively matched installed-game DeltaBuild0 indexes; retained unchanged",
+        "next_route": "Corrected standalone world/object/CAS package deployment; in-game verification pending."
+      },
+      "direct_file_deployment": {
+        "scope": "Private staged conversion; public CLI still unsupported",
+        "files": "Riverview: 1 WORLD + 26 object/CAS packages; PetStore: 1 LOT + 12 object packages",
+        "validation": "40 outputs deployed and destination SHA256s verified; all source expanded resource keys/hashes match audited converted variants; 5110 manifest fields checked with no introduced missing supplied targets",
+        "routes": "InstalledWorlds; Library; Mods/Packages/StoreRecovered",
+        "gameplay": "Unverified; awaiting one combined new-test-game check",
+        "native_archives": "Removed from active Downloads after verified copies were retained to avoid repeating incomplete launcher installation"
+      }
     }
   ],
   "owner_runtime_report": "Header-only recovered collection: owner reported missing content and launcher entries reverting. After metadata conversion: owner confirmed Iams Pet House visible; all Iams content resources remained after exiting. Other per-item interactions unverified."

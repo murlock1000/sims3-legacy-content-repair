@@ -36,7 +36,8 @@ CHUNK_TAGS = {
 LEAF_TYPES = {0x220557da, 0x00b2d882, 0x0166038c, 0x0580a2b5,
               0xf3a38370, 0x082d0369, 0x073faa07, 0x08646069}
 
-# Thumbnail lookup uses these original TGIs; they are not object identities.
+# Recognized thumbnail dependencies outside this archive retain their exact TGIs.
+# Supplied thumbnails follow the same unambiguous map as every supplied resource.
 THUMBNAIL_TYPES = {0x0580a2b4, 0x0580a2b5, 0x0580a2b6,
                    0x626f60cc, 0x626f60cd, 0x626f60ce,
                    0x0580a2cd, 0x0580a2ce, 0xd84e7fc5, 0xd84e7fc6}
@@ -52,12 +53,13 @@ class ResourceKeyMap:
         destinations = {}
         for key in sorted(self.keys):
             ty, group, instance = key
-            destination = key if ty in THUMBNAIL_TYPES else (ty, norm_group(group), instance)
+            destination = (ty, norm_group(group), instance)
             need(destination not in destinations,
                  f'Resource identity collision after conversion: {key_text(destination)}')
             destinations[destination] = key
             if key != destination:
                 self.changes[key] = destination
+        self.output_keys = set(destinations)
 
     @classmethod
     def from_packages(cls, packages):
@@ -84,7 +86,7 @@ class ResourceKeyMap:
     def resolve(self, key, context):
         if key in self.changes:
             return self.changes[key]
-        if key not in self.keys:
+        if key not in self.keys and key not in self.output_keys:
             need(key[0] in THUMBNAIL_TYPES or norm_group(key[1]) == key[1],
                  f'Unknown external Store resource mapping in {context}: {key_text(key)}')
             self.external.add(key)
@@ -263,20 +265,31 @@ def manifest(data, key_map):
     flag_change = 'manifest paidcontent true -> false' if root.get('paidcontent') == 'true' else None
     root.set('paidcontent', 'false')
     edits = []
-    for node in root.iter('reskey'):
-        text = node.text or ''
-        match = re.fullmatch(r'([0-9a-fA-F]+):([0-9a-fA-F]{8}):([0-9a-fA-F]{8}):([0-9a-fA-F]{1,16})', text)
-        need(match is not None, f'Unsupported manifest reskey: {text}')
-        prefix, ty, gr, inst = match.groups()
-        need(prefix in ('0', '1'), 'Unsupported manifest resource membership flag')
+
+    def reference(text, context, membership):
+        pattern = r'([0-9a-fA-F]{8}):([0-9a-fA-F]{8}):([0-9a-fA-F]{1,16})'
+        match = re.fullmatch((r'([01]):' if membership else '') + pattern, text)
+        need(match is not None, f'Unsupported {context}: {text}')
+        prefix, ty, gr, inst = match.groups() if membership else (None, *match.groups())
         before = (int(ty, 16), int(gr, 16), int(inst, 16))
         if prefix == '1':
             need(before in key_map.keys, f'Manifest included resource is absent: {key_text(before)}')
-        after = key_map.resolve(before, 'manifest reskey')
+        after = key_map.resolve(before, context)
+        if before in key_map.keys or prefix == '1':
+            need(after in key_map.output_keys, f'Manifest output resource is absent: {key_text(after)}')
         if before != after:
-            node.text = f'{prefix}:{ty}:{after[1]:08x}:{inst}'
-            edits.append({'context': 'manifest reskey', 'before': key_text(before),
+            edits.append({'context': context, 'before': key_text(before),
                           'after': key_text(after)})
+            return (f'{prefix}:' if membership else '') + f'{ty}:{after[1]:08x}:{inst}'
+        return text
+
+    for node in root.iter():
+        if node.tag == 'reskey':
+            node.text = reference(node.text or '', 'manifest reskey text', True)
+        if 'reskey' in node.attrib:
+            node.set('reskey', reference(node.get('reskey'), 'manifest reskey attribute', True))
+        if node.tag == 'thumbnail':
+            node.text = reference(node.text or '', 'manifest thumbnail text', False)
     output = ET.tostring(root, encoding='utf-8', xml_declaration=True)
     need(ET.tostring(ET.fromstring(output)) == ET.tostring(root), 'Manifest roundtrip mismatch')
     return (output if edits or flag_change else data), edits, flag_change
@@ -491,7 +504,6 @@ def convert_archive(path, output, max_input_bytes=256 * MIB,
               'reference_changes': sum(len(row['references']) for row in rows),
               'unchanged_payloads': sum(row['payload_unchanged'] for row in rows),
               'instance_ids_changed': 0,
-              'thumbnail_keys_preserved': [key_text(key) for key in sorted(key_map.keys) if key[0] in THUMBNAIL_TYPES],
               'resource_key_map': [{'before': key_text(old), 'after': key_text(new)} for old, new in sorted(key_map.changes.items())],
               'preserved_external_resource_keys': [key_text(key) for key in sorted(key_map.external)],
               'identical_shared_resources': key_map.shared,

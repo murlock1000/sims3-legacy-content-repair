@@ -36,6 +36,8 @@ def resources(external=None):
     keys = ET.SubElement(root, 'keylist')
     for key in (OBJECT, OBJECT_KEY, THUMBNAIL):
         ET.SubElement(keys, 'reskey').text = '1:' + convert.key_text(key)
+    ET.SubElement(root, 'thumbnail').text = convert.key_text(THUMBNAIL)
+    ET.SubElement(root, 'catalog', reskey='0:' + convert.key_text(OBJECT))
     return [(MANIFEST, ET.tostring(root)),
             (OBJECT, catalog(0x16, [OBJECT_KEY, THUMBNAIL] + ([external] if external else []))),
             (OBJECT_KEY, catalog(7, [])), (THUMBNAIL, png())]
@@ -62,10 +64,13 @@ class ConversionTests(unittest.TestCase):
         self.source.write_bytes(original)
         return original
 
-    def test_exact_mapping_preserves_thumbnails_instances_and_unrelated_references(self):
+    def test_exact_mapping_normalizes_supplied_thumbnails_and_preserves_external_keys(self):
         key_map = convert.ResourceKeyMap([OBJECT, OBJECT_KEY, THUMBNAIL])
         self.assertEqual(key_map.changes[OBJECT], (OBJECT[0], 0, OBJECT[2]))
-        self.assertEqual(key_map.resolve(THUMBNAIL, 'thumbnail'), THUMBNAIL)
+        self.assertEqual(key_map.resolve(THUMBNAIL, 'thumbnail'), (THUMBNAIL[0], 0, THUMBNAIL[2]))
+        external_thumbnail = (THUMBNAIL[0], THUMBNAIL[1], 0x999)
+        self.assertEqual(key_map.resolve(external_thumbnail, 'external thumbnail'), external_thumbnail)
+        self.assertIn(external_thumbnail, key_map.external)
         external = (OBJECT[0], 0, 0x999)
         self.assertEqual(key_map.resolve(external, 'basegame'), external)
         self.assertIn(external, key_map.external)
@@ -79,6 +84,11 @@ class ConversionTests(unittest.TestCase):
     def test_introduced_key_collisions_and_conflicting_shared_payloads_fail(self):
         with self.assertRaisesRegex(RecoveryError, 'collision'):
             convert.ResourceKeyMap([OBJECT, (OBJECT[0], 0, OBJECT[2])])
+        # Thumbnail variants are never dropped or coalesced to resolve a collision.
+        with self.assertRaisesRegex(RecoveryError, 'collision'):
+            convert.ResourceKeyMap.from_packages({
+                'a': [(THUMBNAIL, b'first image')],
+                'b': [((THUMBNAIL[0], 0, THUMBNAIL[2]), b'different image')]})
         with self.assertRaisesRegex(RecoveryError, 'Conflicting shared resource'):
             convert.ResourceKeyMap.from_packages({'a': [(OBJECT, b'a')], 'b': [(OBJECT, b'b')]})
         key_map = convert.ResourceKeyMap.from_packages({
@@ -91,7 +101,8 @@ class ConversionTests(unittest.TestCase):
         report = convert.convert_archive(self.source, self.output)
         self.assertEqual(self.source.read_bytes(), original)
         self.assertEqual(report['validated_resources'], 4)
-        self.assertEqual(report['index_group_changes'], 2)
+        self.assertEqual(report['index_group_changes'], 3)
+        self.assertNotIn('thumbnail_keys_preserved', report)
         self.assertEqual(report['instance_ids_changed'], 0)
         data, xml, members, _ = parse_archive(Path(report['output']).read_bytes())
         self.assertEqual(ET.fromstring(xml).findtext('PackageId'), 'synthetic-archive-identity')
@@ -106,8 +117,8 @@ class ConversionTests(unittest.TestCase):
         self.assertFalse(recovered)
         actual = {(int(r['type'], 16), int(r['group'], 16), int(r['instance'], 16)):
                   fixed[r['offset']:r['offset'] + r['stored_bytes']] for r in rows}
-        self.assertIn(THUMBNAIL, actual)
-        self.assertEqual(actual[THUMBNAIL], png())
+        self.assertNotIn(THUMBNAIL, actual)
+        self.assertEqual(actual[(THUMBNAIL[0], 0, THUMBNAIL[2])], png())
         self.assertEqual(ET.fromstring(actual[MANIFEST]).get('paidcontent'), 'false')
         self.assertNotIn(OBJECT, actual)
         self.assertIn((OBJECT[0], 0, OBJECT[2]), actual)
@@ -143,6 +154,36 @@ class ConversionTests(unittest.TestCase):
         self.assertEqual(payload, unchanged)
         self.assertEqual(references, [])
         self.assertIsNone(flag_change)
+
+    def test_manifest_maps_all_reference_forms_and_checks_membership(self):
+        key_map = convert.ResourceKeyMap([OBJECT, THUMBNAIL])
+        source = (f'<manifest version="3" packagetype="object" paidcontent="true">'
+                  f'<reskey>1:{convert.key_text(OBJECT)}</reskey>'
+                  f'<catalog reskey="0:{convert.key_text(OBJECT)}" />'
+                  f'<thumbnail>{convert.key_text(THUMBNAIL)}</thumbnail>'
+                  f'<canonical reskey="0:{convert.key_text((OBJECT[0], 0, OBJECT[2]))}" />'
+                  f'</manifest>').encode()
+        payload, references, _ = convert.manifest(source, key_map)
+        root = ET.fromstring(payload)
+        self.assertEqual(root.findtext('reskey'), '1:' + convert.key_text((OBJECT[0], 0, OBJECT[2])))
+        self.assertEqual(root.find('catalog').get('reskey'), '0:' + convert.key_text((OBJECT[0], 0, OBJECT[2])))
+        self.assertEqual(root.findtext('thumbnail'), convert.key_text((THUMBNAIL[0], 0, THUMBNAIL[2])))
+        self.assertEqual(root.find('canonical').get('reskey'), '0:' + convert.key_text((OBJECT[0], 0, OBJECT[2])))
+        self.assertEqual({item['context'] for item in references},
+                         {'manifest reskey text', 'manifest reskey attribute', 'manifest thumbnail text'})
+        self.assertFalse(key_map.external)
+        unknown = convert.key_text((OBJECT[0], OBJECT[1], 0x999))
+        for field in (f'<reskey>0:{unknown}</reskey>', f'<catalog reskey="0:{unknown}" />',
+                      f'<thumbnail>{unknown}</thumbnail>'):
+            source = ('<manifest version="3" packagetype="object" paidcontent="false">'
+                      + field + '</manifest>').encode()
+            with self.subTest(field=field), self.assertRaisesRegex(RecoveryError, 'Unknown external Store'):
+                convert.manifest(source, key_map)
+        for field in (f'<reskey>1:{unknown}</reskey>', f'<catalog reskey="1:{unknown}" />'):
+            source = ('<manifest version="3" packagetype="object" paidcontent="false">'
+                      + field + '</manifest>').encode()
+            with self.subTest(field=field), self.assertRaisesRegex(RecoveryError, 'included resource is absent'):
+                convert.manifest(source, key_map)
 
     def test_expansion_limit_checked_before_malformed_compressed_payload(self):
         package = bytearray(convert.write_package([(OBJECT, b'bad')]))
