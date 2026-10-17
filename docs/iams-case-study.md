@@ -24,11 +24,13 @@ Recovery rebuilt the first **96 bytes** of each protected package as a readable 
 | Recovered archive through genuine installer | Installer reported success | Its new `.dbc` was only 144 bytes and held a bookkeeping resource |
 | Existing content preservation | Original `.ebc`, `.ent`, and input archive hashes unchanged | Limited to the monitored files |
 | Standard package framework | Seven recovered packages copied into `Mods/Packages/IamsRecovered`; destination hashes matched | File placement does not prove the game loaded them |
-| In-game catalog and interactions | Not yet verified | Playability is not established |
+| In-game catalog and interactions | Owner reports content missing after world load and launcher entries reverting to uninstalled | Collection-level report; no independent per-item catalog verification |
 
 The small bookkeeping database is a material limitation: the installer result does not demonstrate that seven content packages reached the game's usable content store. Ordinary object packages can instead be tested through the standard package-loading framework described in the [installation guide](../README.md#test-installation), with the same requirement to verify them in game.
 
 A subsequent launcher check found both the original and repaired Iams archives in Downloads, explaining two entries with the same display name. The other six downloads were still originals; their recovered copies had remained outside the launcher folder. All seven originals were backed up with verified hashes, and the launcher folder was updated to contain only the seven recovered archives. A subsequent batch installer was observed running, but its final result was not captured before it closed. This does not extend the verified launcher-success claim beyond Iams.
+
+The owner subsequently reported that installation completes, but content is missing after loading a world and the launcher again shows it as uninstalled. A new snapshot confirmed a 136-byte `.dbc` containing only one four-byte bookkeeping resource; the original Store `.ebc` and entitlement file remained unchanged. All recovered packages also retain Store-specific manifest flags and resource groups. The reference implementation handles those separately from header recovery. That distinction is a candidate explanation, not a traced game rejection condition. Header-only recovery is therefore not a demonstrated gameplay fix for this installation.
 
 ## Diagnosis and remaining uncertainty
 

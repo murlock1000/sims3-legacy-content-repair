@@ -10,7 +10,7 @@ IAMs2011EP5Reg.Sims3Pack: Installation failed: Please make sure your game has th
 
 This occurred on game version **1.69.47.024017**. Repairing the headers changed the Iams installer's result to **Success!**; resetting the launcher cache did not resolve the original error.
 
-**Verified:** all seven files below passed recovery and content-data checks. Only Iams received a launcher test, which produced a bookkeeping-only database. Its recovered packages were then copied into Mods. **In-game availability remains unverified for all seven sets.**
+**Current limitation:** all seven files passed recovery checks, but the owner reports missing content after loading a world and the launcher returning to an uninstalled state. The new database contains only bookkeeping data. **Header repair alone has not fixed in-game availability.** Investigation is ongoing.
 
 ## Affected downloads and IDs
 

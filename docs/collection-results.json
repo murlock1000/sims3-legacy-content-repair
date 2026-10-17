@@ -14,7 +14,7 @@
       "expanded_resource_bytes": 8023878,
       "resource_ids_and_package_bodies_preserved": true,
       "launcher_test": "Not performed",
-      "gameplay_test": "Not performed"
+      "gameplay_test": "No per-set verification; see owner_runtime_report."
     },
     {
       "input_name": "EP7LimitedEditionSET.Sims3Pack",
@@ -28,7 +28,7 @@
       "expanded_resource_bytes": 210547015,
       "resource_ids_and_package_bodies_preserved": true,
       "launcher_test": "Not performed",
-      "gameplay_test": "Not performed"
+      "gameplay_test": "No per-set verification; see owner_runtime_report."
     },
     {
       "input_name": "EP8RegSET.Sims3Pack",
@@ -42,7 +42,7 @@
       "expanded_resource_bytes": 12114823,
       "resource_ids_and_package_bodies_preserved": true,
       "launcher_test": "Not performed",
-      "gameplay_test": "Not performed"
+      "gameplay_test": "No per-set verification; see owner_runtime_report."
     },
     {
       "input_name": "IAMs2011EP5Reg.Sims3Pack",
@@ -56,7 +56,7 @@
       "expanded_resource_bytes": 7452197,
       "resource_ids_and_package_bodies_preserved": true,
       "launcher_test": "Success; bookkeeping-only cache observed",
-      "gameplay_test": "Not performed"
+      "gameplay_test": "No per-set verification; see owner_runtime_report."
     },
     {
       "input_name": "PetStoreEP5Set.Sims3Pack",
@@ -70,7 +70,7 @@
       "expanded_resource_bytes": 25244977,
       "resource_ids_and_package_bodies_preserved": true,
       "launcher_test": "Not performed",
-      "gameplay_test": "Not performed"
+      "gameplay_test": "No per-set verification; see owner_runtime_report."
     },
     {
       "input_name": "RenaultSet2.Sims3Pack",
@@ -84,7 +84,7 @@
       "expanded_resource_bytes": 39566232,
       "resource_ids_and_package_bodies_preserved": true,
       "launcher_test": "Not performed",
-      "gameplay_test": "Not performed"
+      "gameplay_test": "No per-set verification; see owner_runtime_report."
     },
     {
       "input_name": "Riverview.Sims3Pack",
@@ -98,7 +98,8 @@
       "expanded_resource_bytes": 267589541,
       "resource_ids_and_package_bodies_preserved": true,
       "launcher_test": "Not performed",
-      "gameplay_test": "Not performed"
+      "gameplay_test": "No per-set verification; see owner_runtime_report."
     }
-  ]
+  ],
+  "owner_runtime_report": "After installing the recovered collection, loading a world showed missing content and the launcher reverted to uninstalled entries. No independent per-set catalog verification."
 }
