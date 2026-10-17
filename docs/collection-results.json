@@ -1,11 +1,10 @@
 {
   "game_version": "1.69.47.024017",
-  "scope": "Local structural recovery; installation and gameplay limitations are documented separately.",
+  "scope": "Header recovery inventory plus separately labeled metadata-conversion runtime observations.",
   "archives": [
     {
       "input_name": "EP5RegSet.Sims3Pack",
       "source_sha256": "4de2a7732c3e1ee570600844c23adda33c14500d6976769827bbf40338de50cb",
-      "output_sha256": "52bc0debd7fb2d19f7ed9c726de80f1f915ba422829df4b14fa48f73f6a40c8d",
       "title": "Atomic Age Pets Registration Gifts",
       "type": "object",
       "archive_version": "1.5",
@@ -13,13 +12,25 @@
       "validated_resources": 123,
       "expanded_resource_bytes": 8023878,
       "resource_ids_and_package_bodies_preserved": true,
-      "launcher_test": "Not performed",
-      "gameplay_test": "No per-set verification; see owner_runtime_report."
+      "gameplay_test": "No per-set catalog or interaction verification.",
+      "header_recovery_sha256": "52bc0debd7fb2d19f7ed9c726de80f1f915ba422829df4b14fa48f73f6a40c8d",
+      "header_recovery_launcher_test": "Not performed",
+      "metadata_conversion_test": {
+        "installer": "Success captured; OK accepted",
+        "expected_content_keys": 120,
+        "catalog_objects_present": 5,
+        "payload_comparison": "Nonmanifest/nonstring payloads exact; strings equivalent",
+        "in_game_catalog": "Unverified"
+      },
+      "public_conversion": {
+        "output_sha256": "7cd0940beb139c2fd7f11f07a19b31dfbe3bf1ce69c01374038688cd6ba8e9d2",
+        "scope": "Archive, indexes and parsed references validated on original input. Native tests used preceding prototype differing only in root thumbnail identity/manifest reference; public output preserves original thumbnail identity.",
+        "gameplay": "See separately labeled observations; no independent native test of these exact archive bytes."
+      }
     },
     {
       "input_name": "EP7LimitedEditionSET.Sims3Pack",
       "source_sha256": "3690be31fcd789d68a4854622e1664bfe0579fbb8cf94015f3c4a58d8d91f18d",
-      "output_sha256": "f3fe7d81c89eb712d82aae512fd71180978eed440321dda762cb429f60b0354f",
       "title": "Plants vs. Zombies Content Pack",
       "type": "object",
       "archive_version": "1.5",
@@ -27,13 +38,13 @@
       "validated_resources": 1576,
       "expanded_resource_bytes": 210547015,
       "resource_ids_and_package_bodies_preserved": true,
-      "launcher_test": "Not performed",
-      "gameplay_test": "No per-set verification; see owner_runtime_report."
+      "gameplay_test": "No per-set catalog or interaction verification.",
+      "header_recovery_sha256": "f3fe7d81c89eb712d82aae512fd71180978eed440321dda762cb429f60b0354f",
+      "header_recovery_launcher_test": "Not performed"
     },
     {
       "input_name": "EP8RegSET.Sims3Pack",
       "source_sha256": "fc3f169a6c836c9a9b55ce8d1ecf11aa604f47dc3a861e8c07c8813f51adde39",
-      "output_sha256": "e854a3b4bf703112a7fafe1d77c2e9d0724bfe81c78e1798df3151069dc0a34b",
       "title": "Seasons Wall Decal Pack",
       "type": "object",
       "archive_version": "1.5",
@@ -41,13 +52,25 @@
       "validated_resources": 180,
       "expanded_resource_bytes": 12114823,
       "resource_ids_and_package_bodies_preserved": true,
-      "launcher_test": "Not performed",
-      "gameplay_test": "No per-set verification; see owner_runtime_report."
+      "gameplay_test": "No per-set catalog or interaction verification.",
+      "header_recovery_sha256": "e854a3b4bf703112a7fafe1d77c2e9d0724bfe81c78e1798df3151069dc0a34b",
+      "header_recovery_launcher_test": "Not performed",
+      "metadata_conversion_test": {
+        "installer": "Success captured; OK accepted",
+        "expected_content_keys": 175,
+        "catalog_objects_present": 5,
+        "payload_comparison": "Nonmanifest/nonstring payloads exact; strings equivalent",
+        "in_game_catalog": "Unverified"
+      },
+      "public_conversion": {
+        "output_sha256": "51cce3a40a8d3b2819031c395f6853a90cd45e9adfce5cdec65588cda72ce68a",
+        "scope": "Archive, indexes and parsed references validated on original input. Native tests used preceding prototype differing only in root thumbnail identity/manifest reference; public output preserves original thumbnail identity.",
+        "gameplay": "See separately labeled observations; no independent native test of these exact archive bytes."
+      }
     },
     {
       "input_name": "IAMs2011EP5Reg.Sims3Pack",
       "source_sha256": "0d94bbdcd77397844834b616d6274a5082aabf2bed04fda145e432a569b3d689",
-      "output_sha256": "df04ce560d525a66439b3f62e413df29c9ff6b354aef7f951ec54b466f618316",
       "title": "Iams Pet Starter Kit",
       "type": "object",
       "archive_version": "1.5",
@@ -55,27 +78,41 @@
       "validated_resources": 289,
       "expanded_resource_bytes": 7452197,
       "resource_ids_and_package_bodies_preserved": true,
-      "launcher_test": "Success; bookkeeping-only cache observed",
-      "gameplay_test": "No per-set verification; see owner_runtime_report."
+      "gameplay_test": "Owner confirmed pet-house catalog visibility; interactions unverified.",
+      "header_recovery_sha256": "df04ce560d525a66439b3f62e413df29c9ff6b354aef7f951ec54b466f618316",
+      "header_recovery_launcher_test": "Success; bookkeeping-only cache observed",
+      "metadata_conversion_test": {
+        "installer": "Success captured; OK accepted",
+        "expected_content_keys": 282,
+        "catalog_objects_present": 7,
+        "payload_comparison": "All nonmanifest/nonstring payloads exact; all147STBL entries equivalent",
+        "after_game_exit": "All expected content keys retained",
+        "owner_observation": "Iams Pet House visible in Buy Mode",
+        "interactions": "Unverified"
+      },
+      "public_conversion": {
+        "output_sha256": "3477e5b64c1b9523e48e9ce40748e213286ef1b38281d71697f9ee6759f1e3a8",
+        "scope": "Archive, indexes and parsed references validated on original input. Native tests used preceding prototype differing only in root thumbnail identity/manifest reference; public output preserves original thumbnail identity.",
+        "gameplay": "See separately labeled observations; no independent native test of these exact archive bytes."
+      }
     },
     {
       "input_name": "PetStoreEP5Set.Sims3Pack",
       "source_sha256": "6d291bd3dcb6588994337cf620cb42c1096fe5ba6d6b78a14d0e5a7e8314d963",
-      "output_sha256": "9fd6060cee6145268a2d98c473023df98c01e506ff745d7fc058b0309a155f2c",
-      "title": "Graham\u2019s Pet Swap Shop ",
+      "title": "Graham’s Pet Swap Shop ",
       "type": "object",
       "archive_version": "1.5",
       "recovered_headers": 13,
       "validated_resources": 1047,
       "expanded_resource_bytes": 25244977,
       "resource_ids_and_package_bodies_preserved": true,
-      "launcher_test": "Not performed",
-      "gameplay_test": "No per-set verification; see owner_runtime_report."
+      "gameplay_test": "No per-set catalog or interaction verification.",
+      "header_recovery_sha256": "9fd6060cee6145268a2d98c473023df98c01e506ff745d7fc058b0309a155f2c",
+      "header_recovery_launcher_test": "Not performed"
     },
     {
       "input_name": "RenaultSet2.Sims3Pack",
       "source_sha256": "5a5aa5db459aaf7c659177df4b0a42e6ffb8c547712b91e60cc7582a1b3930aa",
-      "output_sha256": "5900284863acf29b39ed5db0c36656446775996fbc5596a6f93500fdcf8562c6",
       "title": "EV Pack + Renault Twizy + Renault Fluence",
       "type": "object",
       "archive_version": "1.4",
@@ -83,13 +120,23 @@
       "validated_resources": 480,
       "expanded_resource_bytes": 39566232,
       "resource_ids_and_package_bodies_preserved": true,
-      "launcher_test": "Not performed",
-      "gameplay_test": "No per-set verification; see owner_runtime_report."
+      "gameplay_test": "No per-set catalog or interaction verification.",
+      "header_recovery_sha256": "5900284863acf29b39ed5db0c36656446775996fbc5596a6f93500fdcf8562c6",
+      "header_recovery_launcher_test": "Not performed",
+      "metadata_conversion_test": {
+        "scope": "Private digest-pinned legacy-rig experiment; not public converter support",
+        "installer": "Success captured; OK accepted",
+        "expected_content_keys": 459,
+        "catalog_objects_present": 11,
+        "preexisting_ambiguous_key": "01661233:00000001:00000000011fa1b6 has two different original payloads; cache matches one variant",
+        "resource_comparison": "Every expected distinct content key present; bytes match an original converted variant, except equivalent STBL entry order",
+        "in_game_catalog": "Unverified",
+        "vehicle_and_pet_patch_compatibility": "Unverified"
+      }
     },
     {
       "input_name": "Riverview.Sims3Pack",
       "source_sha256": "97fc4494d54973cd5fce2f9150f5c988e3f8dd6edbf64a656eed78ad6f0e85d8",
-      "output_sha256": "a2f8a23286f212ae7e85bad66c39df7980d38b7f2d93536f016b430ad46497a2",
       "title": "Riverview",
       "type": "world",
       "archive_version": "1.5",
@@ -97,9 +144,10 @@
       "validated_resources": 8442,
       "expanded_resource_bytes": 267589541,
       "resource_ids_and_package_bodies_preserved": true,
-      "launcher_test": "Not performed",
-      "gameplay_test": "No per-set verification; see owner_runtime_report."
+      "gameplay_test": "No per-set catalog or interaction verification.",
+      "header_recovery_sha256": "a2f8a23286f212ae7e85bad66c39df7980d38b7f2d93536f016b430ad46497a2",
+      "header_recovery_launcher_test": "Not performed"
     }
   ],
-  "owner_runtime_report": "After installing the recovered collection, loading a world showed missing content and the launcher reverted to uninstalled entries. No independent per-set catalog verification."
+  "owner_runtime_report": "Header-only recovered collection: owner reported missing content and launcher entries reverting. After metadata conversion: owner confirmed Iams Pet House visible; all Iams content resources remained after exiting. Other per-item interactions unverified."
 }

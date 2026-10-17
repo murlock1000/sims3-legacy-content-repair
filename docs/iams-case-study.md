@@ -1,56 +1,42 @@
 # Iams Pet Starter Kit installation failure
 
-## Report and scope
+The original `IAMs2011EP5Reg.Sims3Pack` produced this error on **The Sims 3 1.69.47.024017**:
 
-An owner reported that the old promotional `IAMs2011EP5Reg.Sims3Pack` failed to install on Windows Sims 3 **1.69.47.024017**. The launcher asked for the latest software updates. The owner recalled redeeming a magazine code years earlier; the content was missing from purchase history or would not download again. That account history is user-reported, not independently verified.
+```text
+Installation failed: Please make sure your game has the latest Software Updates and try again.
+```
 
-The investigation worked on local copies. It did not change the game's executable, account information, saves, existing entitlement files, or existing Store content databases. This write-up omits private source paths and does not redistribute the content.
+The owner recalled redeeming this promotional content with a magazine code. A fresh download was unavailable. Analysis used local copies; original archives, game executables, saves, existing Store `.ebc` database and entitlement file were preserved.
 
-## What the archive contains
+## Header recovery was insufficient
 
-The examined archive is **1,620,364 bytes** and contains seven protected `DBPP` package members plus a PNG. An intact resource index could be uniquely identified and validated in each package. All **289 indexed resources** decoded in the recovered packages.
+The 1,620,364-byte archive contains seven protected `DBPP` packages and a PNG. Recovering each package's 96-byte `DBPF` header made all 289 indexed resources readable. Rebuilding the outer checksums changed the genuine installer's result to **Success**.
 
-The [Sims3Pack format documentation](https://modthesims.info/wiki.php?title=Sims_3:SIMS3PACK) describes the outer file as metadata plus embedded members, with per-member offsets, lengths, and checksums. That structure matters here: a change to an embedded member also requires a matching outer checksum.
+However, the resulting `.dbc` contained only a four-byte bookkeeping resource. The owner reported missing objects and entries reverting to uninstalled. Resetting the launcher cache had also failed to resolve the original error. These observations show why installation success and readable archives are insufficient checks.
 
-Recovery rebuilt the first **96 bytes** of each protected package as a readable `DBPF` header using its intact index, then recomputed the outer checksums. Across the archive, **749 byte positions changed**. Every package byte after its first 96 bytes remained unchanged, as did the resource identifiers. No resources were remapped and no decrapification was performed. Header reconstruction follows the approach visible in the [pinned reference implementation](https://gist.github.com/uyjulian/bd24b98a4c97b775c9ab/9f155828f41911cbc8eff4fc4021b45d49dd10c1); checksum math was independently implemented.
+The packages still contained Store resource groups and `paidcontent="true"` manifests. The [pinned reference implementation](https://gist.github.com/uyjulian/bd24b98a4c97b775c9ab/9f155828f41911cbc8eff4fc4021b45d49dd10c1) treats header recovery and Store metadata conversion as separate operations. The [Sims3Pack format](https://modthesims.info/wiki.php?title=Sims_3:SIMS3PACK) also requires matching member offsets, sizes and checksums after rebuilding packages.
 
-## What testing establishes
+## Metadata conversion reached the game
 
-| Check | Observed result | Limit |
-| --- | --- | --- |
-| Original archive, after launcher cache reset | Genuine installer still reported failure | Does not isolate the internal failing branch |
-| Recovered package structure | Seven valid indexes; 289 resources decoded | Format validation does not establish gameplay compatibility |
-| Header-only preservation | Package bodies and resource identifiers unchanged | Dependencies and game interpretation still matter |
-| Recovered archive through genuine installer | Installer reported success | Its new `.dbc` was only 144 bytes and held a bookkeeping resource |
-| Existing content preservation | Original `.ebc`, `.ent`, and input archive hashes unchanged | Limited to the monitored files |
-| Standard package framework | Seven recovered packages copied into `Mods/Packages/IamsRecovered`; destination hashes matched | File placement does not prove the game loaded them |
-| In-game catalog and interactions | Owner reports content missing after world load and launcher entries reverting to uninstalled | Collection-level report; no independent per-item catalog verification |
+A subsequent conversion changed supported Store group identities, their parsed resource references, and manifest flags together. Instance IDs and signed script bytes were preserved. The archive was installed through the genuine launcher and the completed installer's **OK** button was accepted.
 
-The small bookkeeping database is a material limitation: the installer result does not demonstrate that seven content packages reached the game's usable content store. Ordinary object packages can instead be tested through the standard package-loading framework described in the [installation guide](../README.md#test-installation), with the same requirement to verify them in game.
+| Check | Observed result |
+| --- | --- |
+| Iams installation | Success; `.dbc` grew to 1,118,342 bytes |
+| Stored Iams resources | All 282 distinct content keys present, including seven object definitions |
+| Payload comparison | Non-manifest, non-string payloads matched; all 147 string tables matched by entries despite ordering changes |
+| In-game catalog | Owner confirmed the **Iams Pet House** visible in Buy Mode |
+| After owner exited the game | All 282 content keys and seven object definitions remained present |
+| Existing Store content | Monitored original `.ebc` and entitlement hashes unchanged |
 
-A subsequent launcher check found both the original and repaired Iams archives in Downloads, explaining two entries with the same display name. The other six downloads were still originals; their recovered copies had remained outside the launcher folder. All seven originals were backed up with verified hashes, and the launcher folder was updated to contain only the seven recovered archives. A subsequent batch installer was observed running, but its final result was not captured before it closed. This does not extend the verified launcher-success claim beyond Iams.
+The public converter preserves original thumbnail identities to avoid collisions found in other sets. Its three tested outputs differ from these native-tested prototypes only in the root thumbnail identity and corresponding manifest reference; the public archive hashes and exact verification scope are recorded separately in the collection results.
 
-The owner subsequently reported that installation completes, but content is missing after loading a world and the launcher again shows it as uninstalled. A new snapshot confirmed a 136-byte `.dbc` containing only one four-byte bookkeeping resource; the original Store `.ebc` and entitlement file remained unchanged. All recovered packages also retain Store-specific manifest flags and resource groups. The reference implementation handles those separately from header recovery. That distinction is a candidate explanation, not a traced game rejection condition. Header-only recovery is therefore not a demonstrated gameplay fix for this installation.
+The pet house is under **Buy Mode → Sort by Function → Pets → All**. Converted objects appear as custom content; Store-only filters may hide them.
 
-## Diagnosis and remaining uncertainty
+A temporary No Intro package confirmed that the selected profile reads its Mods folder. It was subsequently removed. The older header-only Iams packages were removed from that folder after backup to avoid loading both installation routes. Keeping both original and repaired archives in Downloads had also created duplicate launcher rows with the same display name.
 
-The evidence points to a legacy package-format or validation problem in this installation path: the same resource bodies became structurally readable after header reconstruction, and the genuine installer changed its result. It does **not** establish that a newer game patch is required. It also does not prove that the file became accidentally corrupted, that an account entitlement expired, or that a particular installer check caused the rejection. The protected header representation itself is not evidence of accidental damage.
+## Collection coverage and limits
 
-A fresh supported download would be the preferred comparison, but was unavailable in this case. No runtime trace identifying the original rejecting condition or in-game verification has been completed. Recovery is therefore a demonstrated structural result and a candidate installation route, with playability still an open check.
+The seven archives contain **92 packages and 12,137 resources**; identifiers and header-recovery digests are in [collection results](collection-results.json). After metadata conversion, **Atomic Age Pets Registration Gifts** and **Seasons Wall Decal Pack** also installed successfully. Their expected content keys and object definitions were present in the resulting cache alongside Iams. Their catalog visibility has not yet been confirmed in game.
 
-## What about the rest of the collection?
-
-A separate inventory identified the following additional downloads with the same protected package signature. All six also passed header recovery, index validation, and resource decoding. These are structural recovery results, not claims that all of them fail for the same reason or have been verified in game.
-
-| Download | Protected packages | Decoded resources | Special consideration |
-| --- | ---: | ---: | --- |
-| `EP5RegSet.Sims3Pack` — Atomic Age Pets Registration Gifts | 3 | 123 | Verify required game content |
-| `EP7LimitedEditionSET.Sims3Pack` — Plants vs. Zombies Content Pack | 26 | 1,576 | Contains object and CAS content |
-| `EP8RegSET.Sims3Pack` — Seasons Wall Decal Pack | 5 | 180 | Verify catalog entries |
-| `PetStoreEP5Set.Sims3Pack` — Graham's Pet Swap Shop | 13 | 1,047 | Venue-related content needs its own installation check |
-| `RenaultSet2.Sims3Pack` — EV Pack, Renault Twizy, and Renault Fluence | 11 | 480 | Verify objects and interactions |
-| `Riverview.Sims3Pack` — Riverview | 27 | 8,442 | Includes a world; requires world installation handling |
-
-Including Iams, this inventory covers **seven archives, 92 protected packages, and 12,137 decoded resources**. Source/recovered digests and counts are preserved in [collection results](collection-results.json); assets are excluded. Only the Iams archive received a genuine launcher installation test. Other mods outside these archives were not covered by that inventory. Dependency review and in-game checks remain outstanding. Worlds and venues must not be treated as interchangeable with ordinary object packages. Script/core mods need version and conflict troubleshooting rather than this header reconstruction.
-
-For missing purchases and ordinary Store installation troubleshooting, consult the [EA Forums Store guide](https://forums.ea.com/discussions/the-sims-3-technical-issues-en/read-first-sims-3-store-guide/11157679).
+The Iams pet-house observation establishes catalog visibility, not every item's interactions. No runtime trace established the exact original rejection branch. Protected headers do not by themselves prove accidental corruption, and this case does not establish that a newer game patch is needed. Worlds, lots, CAS items, premium objects and legacy vehicle rigs require additional format and runtime checks; header recovery of those archives is not a claim of complete repair.
