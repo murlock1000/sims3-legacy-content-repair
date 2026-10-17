@@ -28,6 +28,8 @@ Recovery rebuilt the first **96 bytes** of each protected package as a readable 
 
 The small bookkeeping database is a material limitation: the installer result does not demonstrate that seven content packages reached the game's usable content store. Ordinary object packages can instead be tested through the standard package-loading framework described in the [installation guide](../README.md#test-installation), with the same requirement to verify them in game.
 
+A subsequent launcher check found both the original and repaired Iams archives in Downloads, explaining two entries with the same display name. The other six downloads were still originals; their recovered copies had remained outside the launcher folder. All seven originals were backed up with verified hashes, and the launcher folder was updated to contain only the seven recovered archives. A subsequent batch installer was observed running, but its final result was not captured before it closed. This does not extend the verified launcher-success claim beyond Iams.
+
 ## Diagnosis and remaining uncertainty
 
 The evidence points to a legacy package-format or validation problem in this installation path: the same resource bodies became structurally readable after header reconstruction, and the genuine installer changed its result. It does **not** establish that a newer game patch is required. It also does not prove that the file became accidentally corrupted, that an account entitlement expired, or that a particular installer check caused the rejection. The protected header representation itself is not evidence of accidental damage.

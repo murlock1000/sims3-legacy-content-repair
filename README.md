@@ -56,6 +56,8 @@ Results are written to `%USERPROFILE%\Sims3PackRepair\recovered`. Each file repo
 
 Open `%USERPROFILE%\Sims3PackRepair\recovered` and double-click the repaired file, for example `IAMs2011EP5Reg.repaired.Sims3Pack`.
 
+Keep originals in a separate backup folder: the launcher lists original and repaired files under the same content name when both are in its Downloads folder.
+
 Check the content in a new test save: **Buy Mode** for objects, **Create a Sim** for clothing, the **new-game world list** for Riverview, and the **Edit Town library** for venues. A launcher Success message alone is insufficient.
 
 For ordinary objects or clothing missing after installation, use the [standard package setup](https://modthesims.info/wiki.php?title=Game_Help:Installing_Sims_3_Package_Files/Setup_and_Files), including `Mods\Resource.cfg`, then copy the set's folder:
