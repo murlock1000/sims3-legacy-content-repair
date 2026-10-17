@@ -10,21 +10,21 @@ IAMs2011EP5Reg.Sims3Pack: Installation failed: Please make sure your game has th
 
 Also investigated: the launcher reports **Success**, but objects are missing and downloads return to **uninstalled** after playing. In this case, header repair alone created an almost empty installation database. Conversion must also update Store metadata and linked resource references.
 
-Tested on **1.69.47.024017**: the owner sees the **Iams Pet House**, and its content remains installed after exiting. Pets registration gifts and Seasons decals installed with their content present in the database; their in-game checks remain pending. Other causes of this error require separate fixes.
+On **1.69.47.024017**, the owner confirmed the combined repair works in game. The **Iams Pet House** was also identified in Buy Mode, and its content remained installed after exiting. Individual item interactions were not listed.
 
 ## Downloads and IDs
 
-PackageIds identify archives; they are not redemption codes. Public conversion currently supports the three sets marked **Convert**. The others remain under investigation.
+PackageIds identify archives; they are not redemption codes. The public command supports the three sets marked **Convert**. The other four worked in the owner’s repaired setup; public command support is pending.
 
 | Sims3Pack filename | Content | PackageId | Status |
 | --- | --- | --- | --- |
 | IAMs2011EP5Reg.Sims3Pack | Iams Pet Starter Kit | 0x8d44177122e145928b47ac1ca1ad7859 | Convert |
 | EP5RegSet.Sims3Pack | Atomic Age Pets Registration Gifts | 0x45926671b7a04473accc05011fab68d7 | Convert |
 | EP8RegSET.Sims3Pack | Seasons Wall Decal Pack | 0x78b6efdaca0a4c22b860bc1021671b84 | Convert |
-| EP7LimitedEditionSET.Sims3Pack | Plants vs. Zombies Content Pack | 0xe2a5a3b708b74ccb8c4d70ac5c86e366 | Investigating |
-| PetStoreEP5Set.Sims3Pack | Graham's Pet Swap Shop | 0x406012129fa042eb8d8bf6f9684e9da1 | Investigating |
-| RenaultSet2.Sims3Pack | EV Pack + Renault Twizy + Renault Fluence | 0x4af31976afed4aa4bc8e95fa4332fc9a | Investigating |
-| Riverview.Sims3Pack | Riverview world | 0xd535a1c25e231c854401ac15e7ae1bb2 | Investigating |
+| EP7LimitedEditionSET.Sims3Pack | Plants vs. Zombies Content Pack | 0xe2a5a3b708b74ccb8c4d70ac5c86e366 | Local repair |
+| PetStoreEP5Set.Sims3Pack | Graham's Pet Swap Shop | 0x406012129fa042eb8d8bf6f9684e9da1 | Local repair |
+| RenaultSet2.Sims3Pack | EV Pack + Renault Twizy + Renault Fluence | 0x4af31976afed4aa4bc8e95fa4332fc9a | Local repair |
+| Riverview.Sims3Pack | Riverview world | 0xd535a1c25e231c854401ac15e7ae1bb2 | Local repair |
 
 ## Windows instructions
 

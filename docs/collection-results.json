@@ -12,7 +12,7 @@
       "validated_resources": 123,
       "expanded_resource_bytes": 8023878,
       "resource_ids_and_package_bodies_preserved": true,
-      "gameplay_test": "No per-set catalog or interaction verification.",
+      "gameplay_test": "Owner reported the combined repaired setup works in game; individual item coverage and interactions were not enumerated.",
       "header_recovery_sha256": "52bc0debd7fb2d19f7ed9c726de80f1f915ba422829df4b14fa48f73f6a40c8d",
       "header_recovery_launcher_test": "Not performed",
       "metadata_conversion_test": {
@@ -20,7 +20,7 @@
         "expected_content_keys": 120,
         "catalog_objects_present": 5,
         "payload_comparison": "Nonmanifest/nonstring payloads exact; strings equivalent",
-        "in_game_catalog": "Unverified"
+        "in_game_catalog": "Not separately enumerated; see owner_combined_check."
       },
       "public_conversion": {
         "output_sha256": "1b7981d942365d10582051cfb844c233f7841dd0e91125d8bf209657bee79150",
@@ -38,14 +38,14 @@
       "validated_resources": 1576,
       "expanded_resource_bytes": 210547015,
       "resource_ids_and_package_bodies_preserved": true,
-      "gameplay_test": "No per-set catalog or interaction verification.",
+      "gameplay_test": "Owner reported the combined repaired setup works in game; individual item coverage and interactions were not enumerated.",
       "header_recovery_sha256": "f3fe7d81c89eb712d82aae512fd71180978eed440321dda762cb429f60b0354f",
       "header_recovery_launcher_test": "Not performed",
       "metadata_conversion_test": {
         "scope": "Private experiment; public converter unsupported",
         "installer": "Success captured; OK accepted",
         "runtime_cache_audit": "25 playable packages accounted for; 41 set-container keys remain in original protected cache; Peashooter buff definitions present in unchanged ccmerged; 3 XML rewrites semantically equal",
-        "catalog_and_interactions": "Unverified"
+        "catalog_and_interactions": "Not separately enumerated; see owner_combined_check."
       }
     },
     {
@@ -58,7 +58,7 @@
       "validated_resources": 180,
       "expanded_resource_bytes": 12114823,
       "resource_ids_and_package_bodies_preserved": true,
-      "gameplay_test": "No per-set catalog or interaction verification.",
+      "gameplay_test": "Owner reported the combined repaired setup works in game; individual item coverage and interactions were not enumerated.",
       "header_recovery_sha256": "e854a3b4bf703112a7fafe1d77c2e9d0724bfe81c78e1798df3151069dc0a34b",
       "header_recovery_launcher_test": "Not performed",
       "metadata_conversion_test": {
@@ -66,7 +66,7 @@
         "expected_content_keys": 175,
         "catalog_objects_present": 5,
         "payload_comparison": "Nonmanifest/nonstring payloads exact; strings equivalent",
-        "in_game_catalog": "Unverified"
+        "in_game_catalog": "Not separately enumerated; see owner_combined_check."
       },
       "public_conversion": {
         "output_sha256": "6d5c8896f3fd51bf6400f956c167a6ccafac89e420e48691b607e1ee15c731db",
@@ -84,7 +84,7 @@
       "validated_resources": 289,
       "expanded_resource_bytes": 7452197,
       "resource_ids_and_package_bodies_preserved": true,
-      "gameplay_test": "Owner confirmed pet-house catalog visibility; interactions unverified.",
+      "gameplay_test": "Owner explicitly identified Iams Pet House in Buy Mode and later confirmed the combined repair works; individual interactions were not enumerated.",
       "header_recovery_sha256": "df04ce560d525a66439b3f62e413df29c9ff6b354aef7f951ec54b466f618316",
       "header_recovery_launcher_test": "Success; bookkeeping-only cache observed",
       "metadata_conversion_test": {
@@ -112,21 +112,21 @@
       "validated_resources": 1047,
       "expanded_resource_bytes": 25244977,
       "resource_ids_and_package_bodies_preserved": true,
-      "gameplay_test": "No per-set catalog or interaction verification.",
+      "gameplay_test": "Owner reported the combined repaired setup works in game; individual item coverage and interactions were not enumerated.",
       "header_recovery_sha256": "9fd6060cee6145268a2d98c473023df98c01e506ff745d7fc058b0309a155f2c",
       "header_recovery_launcher_test": "Not performed",
       "metadata_conversion_test": {
         "scope": "Private experiment; public converter unsupported",
         "installer": "Success captured; OK accepted",
         "observed_limitation": "LOT not created; existing venue disappeared and was immediately restored from backup. 26 object-sidecar keys missing. One root manifest thumbnail mismatch found and corrected at the producing owner.",
-        "next_route": "Corrected standalone world/lot/object package deployment; in-game verification pending."
+        "next_route": "Corrected standalone files subsequently deployed; owner confirmed the combined repaired setup works in game."
       },
       "direct_file_deployment": {
         "scope": "Private staged conversion; public CLI still unsupported",
         "files": "Riverview: 1 WORLD + 26 object/CAS packages; PetStore: 1 LOT + 12 object packages",
         "validation": "40 outputs deployed and destination SHA256s verified; all source expanded resource keys/hashes match audited converted variants; 5110 manifest fields checked with no introduced missing supplied targets",
         "routes": "InstalledWorlds; Library; Mods/Packages/StoreRecovered",
-        "gameplay": "Unverified; awaiting one combined new-test-game check",
+        "gameplay": "Owner reported the combined repaired setup works in game; individual item coverage and interactions were not enumerated.",
         "native_archives": "Removed from active Downloads after verified copies were retained to avoid repeating incomplete launcher installation"
       }
     },
@@ -140,7 +140,7 @@
       "validated_resources": 480,
       "expanded_resource_bytes": 39566232,
       "resource_ids_and_package_bodies_preserved": true,
-      "gameplay_test": "No per-set catalog or interaction verification.",
+      "gameplay_test": "Owner reported the combined repaired setup works in game; individual item coverage and interactions were not enumerated.",
       "header_recovery_sha256": "5900284863acf29b39ed5db0c36656446775996fbc5596a6f93500fdcf8562c6",
       "header_recovery_launcher_test": "Not performed",
       "metadata_conversion_test": {
@@ -150,7 +150,7 @@
         "catalog_objects_present": 11,
         "preexisting_ambiguous_key": "01661233:00000001:00000000011fa1b6 has two different original payloads; cache matches one variant",
         "resource_comparison": "Every expected distinct content key present; bytes match an original converted variant, except equivalent STBL entry order",
-        "in_game_catalog": "Unverified",
+        "in_game_catalog": "Not separately enumerated; see owner_combined_check.",
         "vehicle_and_pet_patch_compatibility": "Unverified"
       }
     },
@@ -164,7 +164,7 @@
       "validated_resources": 8442,
       "expanded_resource_bytes": 267589541,
       "resource_ids_and_package_bodies_preserved": true,
-      "gameplay_test": "No per-set catalog or interaction verification.",
+      "gameplay_test": "Owner reported the combined repaired setup works in game; individual item coverage and interactions were not enumerated.",
       "header_recovery_sha256": "a2f8a23286f212ae7e85bad66c39df7980d38b7f2d93536f016b430ad46497a2",
       "header_recovery_launcher_test": "Not performed",
       "metadata_conversion_test": {
@@ -172,17 +172,23 @@
         "installer": "Success captured; OK accepted",
         "observed_limitation": "World not recreated; original restored from backup. 973 distinct object/CAS sidecar keys absent from DBC. Exact-reference audit found no introduced missing targets.",
         "external_mesh_dependencies": "8 original GEOM keys positively matched installed-game DeltaBuild0 indexes; retained unchanged",
-        "next_route": "Corrected standalone world/object/CAS package deployment; in-game verification pending."
+        "next_route": "Corrected standalone files subsequently deployed; owner confirmed the combined repaired setup works in game."
       },
       "direct_file_deployment": {
         "scope": "Private staged conversion; public CLI still unsupported",
         "files": "Riverview: 1 WORLD + 26 object/CAS packages; PetStore: 1 LOT + 12 object packages",
         "validation": "40 outputs deployed and destination SHA256s verified; all source expanded resource keys/hashes match audited converted variants; 5110 manifest fields checked with no introduced missing supplied targets",
         "routes": "InstalledWorlds; Library; Mods/Packages/StoreRecovered",
-        "gameplay": "Unverified; awaiting one combined new-test-game check",
+        "gameplay": "Owner reported the combined repaired setup works in game; individual item coverage and interactions were not enumerated.",
         "native_archives": "Removed from active Downloads after verified copies were retained to avoid repeating incomplete launcher installation"
       }
     }
   ],
-  "owner_runtime_report": "Header-only recovered collection: owner reported missing content and launcher entries reverting. After metadata conversion: owner confirmed Iams Pet House visible; all Iams content resources remained after exiting. Other per-item interactions unverified."
+  "owner_runtime_report": "Header-only recovery left missing content and uninstalled launcher entries. After metadata conversion and complete direct deployment where needed, the owner confirmed the combined repair works in game. Iams Pet House was explicitly identified earlier; individual interactions were not enumerated.",
+  "owner_combined_check": {
+    "source": "Owner reply after complete deployment and request for a combined in-game check",
+    "quote": "it works",
+    "outcome": "Owner-reported successful combined repair",
+    "limits": "No item-by-item interaction checklist or confirmation of subsequent restart/save reload persistence was provided. Public command support remains limited to the three documented sets."
+  }
 }
